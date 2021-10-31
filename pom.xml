@@ -9,11 +9,11 @@
 		<version>2.1.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.sabilogistics.api</groupId>
-	<artifactId>sabi-logistic-api</artifactId>
+	<groupId>com.sabisupplier.api</groupId>
+	<artifactId>sabi-supplier-api</artifactId>
 	<version>1.0</version>
-	<name>sabi-logistic-api</name>
-	<description>sabi-logistic-api</description>
+	<name>sabi-supplier-api</name>
+	<description>sabi-supplier-api</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -243,14 +243,74 @@
 
 	</dependencies>
 
+
 	<build>
-		<finalName>sabi-logistic-api-1.0</finalName>
+		<finalName>sabi-supplier-api-1.0</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+				<executions>
+					<execution>
+						<id>install-supplier-core</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>${basedir}/lib/sabi-supplier-core.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>com.sabiSupplier.core</groupId>
+							<artifactId>sabi-supplier-core</artifactId>
+							<version>1.0</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>install-sabi-framework</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>${basedir}/lib/sabi-framework.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>com.sabi.framework</groupId>
+							<artifactId>sabi-framework</artifactId>
+							<version>1.0</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>install-supplier-service</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>${basedir}/lib/sabi-supplier-service.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>com.sabisupplier.service</groupId>
+							<artifactId>sabi-supplier-service</artifactId>
+							<version>1.0</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
+
+
 
 </project>
