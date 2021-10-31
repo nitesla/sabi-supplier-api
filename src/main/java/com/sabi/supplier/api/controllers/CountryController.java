@@ -1,14 +1,14 @@
-package com.sabisupplier.api.controllers;
+package com.sabi.supplier.api.controllers;
 
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabisupplier.service.services.CountryService;
-import com.sabisupplierscore.dto.request.CountryDto;
-import com.sabisupplierscore.dto.response.CountryResponseDto;
-import com.sabisupplierscore.models.Country;
+import com.sabi.supplier.service.services.CountryService;
+import com.sabi.suppliers.core.dto.request.CountryDto;
+import com.sabi.suppliers.core.dto.response.CountryResponseDto;
+import com.sabi.suppliers.core.models.Country;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;

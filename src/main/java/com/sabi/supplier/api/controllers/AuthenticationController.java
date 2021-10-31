@@ -1,4 +1,4 @@
-package com.sabisupplier.api.controllers;
+package com.sabi.supplier.api.controllers;
 
 
 import com.sabi.framework.dto.requestDto.LoginRequest;

@@ -1,4 +1,4 @@
-package com.sabisupplier.api;
+package com.sabi.supplier.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @ComponentScan(basePackages = "com.sabi.framework")
 @EntityScan(basePackages = {"com.sabisupplierscore.models"})
-@EnableJpaRepositories({"com.sabisupplier.service.repositories","com.sabi.framework.repositories"})
+@EnableJpaRepositories({"com.sabi.supplier.service.repositories","com.sabi.framework.repositories"})
 @SpringBootApplication
 public class SabiSupplierApiApplication {
 
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) {
 		SpringApplication.run(SabiSupplierApiApplication.class, args);
 
 
