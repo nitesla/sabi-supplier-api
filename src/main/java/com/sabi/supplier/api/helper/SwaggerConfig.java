@@ -1,4 +1,4 @@
-package com.sabisupplier.api.helper;
+package com.sabi.supplier.api.helper;
 
 
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class SwaggerConfig {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2).select()
 
-                .apis(RequestHandlerSelectors.basePackage("com.sabisupplier.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.sabi.supplier.api"))
                 .paths(regex("/*.*")).build()
                 .apiInfo(metaData());
     }
