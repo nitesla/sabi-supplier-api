@@ -6,9 +6,9 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.CountryService;
-import com.sabi.suppliers.core.dto.request.CountryDto;
-import com.sabi.suppliers.core.dto.response.CountryResponseDto;
-import com.sabi.suppliers.core.models.Country;
+import com.sabisupplierscore.dto.request.CountryDto;
+import com.sabisupplierscore.dto.response.CountryResponseDto;
+import com.sabisupplierscore.models.Country;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -57,7 +57,7 @@ public class CountryController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateCountry(@Validated @RequestBody  CountryDto request){
+    public ResponseEntity<Response> updateCountry(@Validated @RequestBody CountryDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         CountryResponseDto response = service.updateCountry(request);

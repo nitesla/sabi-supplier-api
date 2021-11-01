@@ -6,9 +6,9 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.StateService;
-import com.sabi.suppliers.core.dto.request.StateDto;
-import com.sabi.suppliers.core.dto.response.StateResponseDto;
-import com.sabi.suppliers.core.models.State;
+import com.sabisupplierscore.dto.request.StateDto;
+import com.sabisupplierscore.dto.response.StateResponseDto;
+import com.sabisupplierscore.models.State;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -61,7 +61,7 @@ public class StateController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateState(@Validated @RequestBody  StateDto request){
+    public ResponseEntity<Response> updateState(@Validated @RequestBody StateDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         StateResponseDto response = service.updateState(request);
