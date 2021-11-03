@@ -1,16 +1,15 @@
 package com.sabi.supplier.api.controllers;
 
-
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.supplier.service.services.StateService;
-import com.sabi.suppliers.core.dto.request.StateDto;
-import com.sabi.suppliers.core.dto.response.StateResponseDto;
+import com.sabi.supplier.service.services.ManufacturerService;
+import com.sabi.suppliers.core.dto.request.ManufacturerDto;
+import com.sabi.suppliers.core.dto.response.ManufacturerResponseDto;
+import com.sabi.suppliers.core.models.Manufacturer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import com.sabi.suppliers.core.models.State;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,32 +17,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"state")
-public class StateController {
+@RequestMapping(Constants.APP_CONTENT+"manufacturer")
+public class ManufacturerController {
 
+    private final ManufacturerService service;
 
-    private final StateService service;
-
-    public StateController(StateService service) {
+    public ManufacturerController(ManufacturerService service) {
         this.service = service;
     }
-
 
     /** <summary>
      * State creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new states</remarks>
+     * <remarks>this endpoint is responsible for creation of new product</remarks>
      */
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createState(@Validated @RequestBody StateDto request){
+    public ResponseEntity<Response> createManufacturer(@Validated @RequestBody ManufacturerDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        StateResponseDto response = service.createState(request);
+        ManufacturerResponseDto response = service.createManufacturer(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -56,15 +52,15 @@ public class StateController {
     /** <summary>
      * State update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating states</remarks>
+     * <remarks>this endpoint is responsible for updating product</remarks>
      */
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateState(@Validated @RequestBody StateDto request){
+    public ResponseEntity<Response> updateManufacturer(@Validated @RequestBody ManufacturerDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        StateResponseDto response = service.updateState(request);
+        ManufacturerResponseDto response = service.updateManufacturer(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -81,10 +77,10 @@ public class StateController {
      */
     @GetMapping("/{id}")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getState(@PathVariable Long id){
+    public ResponseEntity<Response> getManufacturer(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        StateResponseDto response = service.findState(id);
+        ManufacturerResponseDto response = service.findManufacturer(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -100,12 +96,12 @@ public class StateController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getStates(@RequestParam(value = "name",required = false)String name,
-                                             @RequestParam(value = "page") int page,
-                                             @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getManufacturer(@RequestParam(value = "name",required = false)String name,
+                                               @RequestParam(value = "page") int page,
+                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<State> response = service.findAll(name,PageRequest.of(page, pageSize));
+        Page<Manufacturer> response = service.findAllManufacturer(name, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -117,7 +113,7 @@ public class StateController {
     /** <summary>
      * Enable disenable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
+     * <remarks>this endpoint is responsible for enabling and disenabling a product</remarks>
      */
 
     @PutMapping("/enabledisenable")
@@ -136,13 +132,11 @@ public class StateController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<State> response = service.getAll(isActive);
+        List<Manufacturer> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
-
-
 }

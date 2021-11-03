@@ -5,8 +5,9 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.ProductService;
-import com.sabisupplierscore.dto.request.ProductDto;
-import com.sabisupplierscore.dto.response.ProductResponseDto;
+import com.sabi.suppliers.core.dto.request.ProductDto;
+import com.sabi.suppliers.core.dto.response.ProductResponseDto;
+import com.sabi.suppliers.core.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -101,7 +102,7 @@ public class ProductController {
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<com.sabisupplierscore.models.Product> response = service.findAllProduct(name, PageRequest.of(page, pageSize));
+        Page<Product> response = service.findAllProduct(name, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -132,7 +133,7 @@ public class ProductController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<com.sabisupplierscore.models.Product> response = service.getAll(isActive);
+        List<Product> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

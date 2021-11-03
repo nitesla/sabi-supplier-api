@@ -6,9 +6,9 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.LGAService;
-import com.sabisupplierscore.dto.request.LGADto;
-import com.sabisupplierscore.dto.response.LGAResponseDto;
-import com.sabisupplierscore.models.LGA;
+import com.sabi.suppliers.core.dto.request.LGADto;
+import com.sabi.suppliers.core.dto.response.LGAResponseDto;
+import com.sabi.suppliers.core.models.LGA;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -57,7 +57,7 @@ public class LGAController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateLga(@Validated @RequestBody  LGADto request){
+    public ResponseEntity<Response> updateLga(@Validated @RequestBody LGADto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         LGAResponseDto response = service.updateLga(request);
