@@ -94,13 +94,13 @@ public class SupplierGoodController {
      */
     @GetMapping("")
     public ResponseEntity<Response> getSupplierLocations(@RequestParam(value = "supplierProductId",required = false)Long supplierProductId,
-                                                         @RequestParam(value = "statvariantIdeID",required = false)Long variantId,
-                                                         @RequestParam(value = "price",required = false)Long price,
+                                                         @RequestParam(value = "variantId",required = false)Long variantId,
+//                                                         @RequestParam(value = "price",required = false)double price,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<SupplierGood> response = service.findAll(supplierProductId, variantId, price, PageRequest.of(page, pageSize));
+        Page<SupplierGood> response = service.findAll(supplierProductId, variantId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
