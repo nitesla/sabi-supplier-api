@@ -102,9 +102,10 @@ public class AuthenticationController {
         String agentId= "";
         String referralCode="";
         String isEmailVerified="";
+        String partnersCategory="";
 
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),agentId,referralCode,isEmailVerified);
+                accessList,userService.getSessionExpiry(),agentId,referralCode,isEmailVerified,partnersCategory);
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
