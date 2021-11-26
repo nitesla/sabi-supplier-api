@@ -5,12 +5,12 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.supplier.service.services.StateService;
-import com.sabi.suppliers.core.dto.request.StateDto;
-import com.sabi.suppliers.core.dto.response.StateResponseDto;
+import com.sabi.supplier.service.services.SupplierLocationService;
+import com.sabi.suppliers.core.dto.request.SupplierLocationRequestDto;
+import com.sabi.suppliers.core.dto.response.SupplierLocationResponseDto;
+import com.sabi.suppliers.core.models.SupplierLocation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import com.sabi.suppliers.core.models.State;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,29 +21,28 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"state")
-public class StateController {
+@RequestMapping(Constants.APP_CONTENT+"supplierlocation")
+public class SupplierLocationController {
 
 
-    private final StateService service;
+    private final SupplierLocationService service;
 
-    public StateController(StateService service) {
+    public SupplierLocationController(SupplierLocationService service) {
         this.service = service;
     }
 
 
     /** <summary>
-     * State creation endpoint
+     * Supplier Location creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new states</remarks>
+     * <remarks>this endpoint is responsible for creation of new Supplier Location</remarks>
      */
 
     @PostMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createState(@Validated @RequestBody StateDto request){
+    public ResponseEntity<Response> createSupplierLocation(@Validated @RequestBody SupplierLocationRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        StateResponseDto response = service.createState(request);
+        SupplierLocationResponseDto response = service.createSupplierLocation(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -54,17 +53,16 @@ public class StateController {
 
 
     /** <summary>
-     * State update endpoint
+     * Supplier Location update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating states</remarks>
+     * <remarks>this endpoint is responsible for updating Supplier Location</remarks>
      */
 
     @PutMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateState(@Validated @RequestBody StateDto request){
+    public ResponseEntity<Response> updateSupplierLocation(@Validated @RequestBody  SupplierLocationRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        StateResponseDto response = service.updateState(request);
+        SupplierLocationResponseDto response = service.updateSupplierLocation(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -80,11 +78,10 @@ public class StateController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getState(@PathVariable Long id){
+    public ResponseEntity<Response> getSupplierLocation(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        StateResponseDto response = service.findState(id);
+        SupplierLocationResponseDto response = service.findSupplierLocation(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -100,12 +97,13 @@ public class StateController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getStates(@RequestParam(value = "name",required = false)String name,
-                                             @RequestParam(value = "page") int page,
-                                             @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getSupplierLocations(@RequestParam(value = "supplierID",required = false)Long supplierID,
+                                                         @RequestParam(value = "stateID",required = false)Long stateID,
+                                                         @RequestParam(value = "page") int page,
+                                                         @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<State> response = service.findAll(name,PageRequest.of(page, pageSize));
+        Page<SupplierLocation> response = service.findAll(supplierID, stateID, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -115,16 +113,16 @@ public class StateController {
 
 
     /** <summary>
-     * Enable disenable
+     * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a Supplier Location</remarks>
      */
 
-    @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    @PutMapping("/enabledisable")
+    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnableState(request);
+        service.enableDisable(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -136,7 +134,7 @@ public class StateController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<State> response = service.getAll(isActive);
+        List<SupplierLocation> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
