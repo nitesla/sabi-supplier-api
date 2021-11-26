@@ -3,6 +3,7 @@ package com.sabi.supplier.api.controllers;
 
 import com.sabi.framework.dto.requestDto.LoginRequest;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
+import com.sabi.framework.dto.responseDto.PartnersCategoryReturn;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.exceptions.LockedException;
 import com.sabi.framework.exceptions.UnauthorizedException;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @SuppressWarnings("All")
@@ -99,13 +101,13 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authWithToken);
         userService.updateLogin(user.getId());
 
-        String agentId= "";
+        String clientId= "";
         String referralCode="";
         String isEmailVerified="";
-        String partnersCategory="";
+        List<PartnersCategoryReturn> partnerCategory= null;
 
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),agentId,referralCode,isEmailVerified,partnersCategory);
+                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory);
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 

@@ -57,7 +57,7 @@ public class LGAController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateLga(@Validated @RequestBody  LGADto request){
+    public ResponseEntity<Response> updateLga(@Validated @RequestBody LGADto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         LGAResponseDto response = service.updateLga(request);

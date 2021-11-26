@@ -57,7 +57,7 @@ public class CountryController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateCountry(@Validated @RequestBody  CountryDto request){
+    public ResponseEntity<Response> updateCountry(@Validated @RequestBody CountryDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         CountryResponseDto response = service.updateCountry(request);
