@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@SuppressWarnings("All")
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"warehouseuser")
 public class WareHouseUserController {

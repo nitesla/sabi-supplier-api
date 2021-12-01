@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 
+@SuppressWarnings("All")
 @RestController
 @RequestMapping(Constants.APP_CONTENT + "supplyrequest")
 public class SupplyRequestController {

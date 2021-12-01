@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 
+@SuppressWarnings("All")
 @RestController
 @RequestMapping(Constants.APP_CONTENT + "warehouse")
 public class WareHouseController {
