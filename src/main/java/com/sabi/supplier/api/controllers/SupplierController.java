@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 
 @SuppressWarnings("All")
 @RestController
@@ -52,7 +54,7 @@ public class SupplierController {
 
 
     @PutMapping("/completesignup")
-    public ResponseEntity<Response> completeSignUp(@Validated @RequestBody CompleteSignUpDto request){
+    public ResponseEntity<Response> completeSignUp(@Validated @RequestBody CompleteSignUpDto request) throws IOException {
         HttpStatus httpCode ;
         Response resp = new Response();
         CompleteSignUpResponse response = service.completeSignUp(request);
