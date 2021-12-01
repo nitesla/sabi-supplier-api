@@ -18,6 +18,8 @@ import com.sabi.framework.service.UserService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.framework.utils.Utility;
+import com.sabi.supplier.service.repositories.SupplierRepository;
+import com.sabi.suppliers.core.models.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,10 +53,12 @@ public class AuthenticationController {
     private ExternalTokenService externalTokenService;
 
     private final UserService userService;
+    private final SupplierRepository supplierRepository;
 
 
-    public AuthenticationController(UserService userService) {
+    public AuthenticationController(UserService userService,SupplierRepository supplierRepository) {
         this.userService = userService;
+        this.supplierRepository = supplierRepository;
     }
 
     @PostMapping("/login")
@@ -110,6 +114,12 @@ public class AuthenticationController {
         String referralCode="";
         String isEmailVerified="";
         List<PartnersCategoryReturn> partnerCategory= null;
+        if (user.getUserCategory().equals(Constants.OTHER_USER)) {
+            Supplier supplier = supplierRepository.findByUserId(user.getId());
+            if(supplier !=null){
+                clientId = String.valueOf(supplier.getId());
+            }
+        }
 
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
                 accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory);
