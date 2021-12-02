@@ -93,7 +93,7 @@ public class LGAController {
      * </summary>
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
-    @GetMapping("")
+    @GetMapping("/page")
     public ResponseEntity<Response> getLgas(@RequestParam(value = "name",required = false)String name,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
@@ -127,8 +127,23 @@ public class LGAController {
     }
 
 
+
+
+
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "stateId",required = false)Long stateId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<LGA> response = service.getAllByStateId(stateId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/active/list")
+    public ResponseEntity<Response> getAllByActive(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
         List<LGA> response = service.getAll(isActive);

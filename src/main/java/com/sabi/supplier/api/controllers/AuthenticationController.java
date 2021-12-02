@@ -19,7 +19,8 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.framework.utils.Utility;
 import com.sabi.supplier.service.repositories.SupplierRepository;
-import com.sabi.suppliers.core.models.Supplier;
+import com.sabi.supplier.service.repositories.SupplierUserRepository;
+import com.sabi.suppliers.core.models.SupplierUser;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,11 +55,14 @@ public class AuthenticationController {
 
     private final UserService userService;
     private final SupplierRepository supplierRepository;
+    private final SupplierUserRepository supplierUserRepository;
 
 
-    public AuthenticationController(UserService userService,SupplierRepository supplierRepository) {
+    public AuthenticationController(UserService userService,SupplierRepository supplierRepository,
+                                    SupplierUserRepository supplierUserRepository) {
         this.userService = userService;
         this.supplierRepository = supplierRepository;
+        this.supplierUserRepository = supplierUserRepository;
     }
 
     @PostMapping("/login")
@@ -115,9 +119,9 @@ public class AuthenticationController {
         String isEmailVerified="";
         List<PartnersCategoryReturn> partnerCategory= null;
         if (user.getUserCategory().equals(Constants.OTHER_USER)) {
-            Supplier supplier = supplierRepository.findByUserId(user.getId());
+            SupplierUser supplier = supplierUserRepository.findByUserId(user.getId());
             if(supplier !=null){
-                clientId = String.valueOf(supplier.getId());
+                clientId = String.valueOf(supplier.getSupplierId());
             }
         }
 
