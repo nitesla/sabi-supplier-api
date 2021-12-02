@@ -35,7 +35,7 @@ public class SupplierProductController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createSupplierLocation(@Validated @RequestBody SupplierProductDto request){
+    public ResponseEntity<Response> createSupplierProduct(@Validated @RequestBody SupplierProductDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         SupplierProductResponseDto response = service.createSupplierProduct(request);
@@ -55,7 +55,7 @@ public class SupplierProductController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateSupplierLocation(@Validated @RequestBody  SupplierProductDto request){
+    public ResponseEntity<Response> updateSupplierProduct(@Validated @RequestBody  SupplierProductDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         SupplierProductResponseDto response = service.updateSupplierProduct(request);
@@ -74,7 +74,7 @@ public class SupplierProductController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getSupplierLocation(@PathVariable Long id){
+    public ResponseEntity<Response> getSupplierProduct(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
         SupplierProductResponseDto response = service.findSupplierProduct(id);
@@ -93,7 +93,7 @@ public class SupplierProductController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getSupplierLocations(@RequestParam(value = "supplierId",required = false)Long supplierId,
+    public ResponseEntity<Response> getSupplierProduct(@RequestParam(value = "supplierId",required = false)Long supplierId,
                                                          @RequestParam(value = "productId",required = false)Long productId,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){
