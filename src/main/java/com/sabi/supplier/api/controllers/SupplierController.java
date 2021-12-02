@@ -15,12 +15,16 @@ import com.sabi.suppliers.core.dto.response.AssetTypeResponse;
 import com.sabi.suppliers.core.dto.response.CompleteSignUpResponse;
 import com.sabi.suppliers.core.dto.response.SupplierResponseDto;
 import com.sabi.suppliers.core.dto.response.SupplierSignUpResponse;
+import com.sabi.suppliers.core.models.Supplier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 
 @SuppressWarnings("All")
@@ -77,9 +81,6 @@ public class SupplierController {
 
 
 
-
-
-
     /** <summary>
      * Supplier update endpoint
      * </summary>
@@ -118,6 +119,33 @@ public class SupplierController {
     }
 
 
+
+    @GetMapping("")
+    public ResponseEntity<Response> getSuppliers(@RequestParam(value = "name",required = false)String name,
+                                              @RequestParam(value = "page") int page,
+                                              @RequestParam(value = "pageSize") int pageSize){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        Page<Supplier> response = service.findAll(name,PageRequest.of(page, pageSize));
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
+    @GetMapping("/list")
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<Supplier> response = service.getAll(isActive);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
 
 
