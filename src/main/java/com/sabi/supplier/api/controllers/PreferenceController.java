@@ -6,6 +6,7 @@ import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.PreferenceService;
 import com.sabi.suppliers.core.dto.request.PreferenceDto;
 import com.sabi.suppliers.core.dto.response.PreferenceResponseDto;
+import com.sabi.suppliers.core.models.Preference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -70,7 +71,7 @@ public class PreferenceController {
     public ResponseEntity<Response> getPreference(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        PreferenceResponseDto response = service.findPreferenceByPartnerId(id);
+        Preference response = service.findPreferenceByPartnerId(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
