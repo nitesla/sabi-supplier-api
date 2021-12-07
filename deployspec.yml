@@ -21,6 +21,11 @@ phases:
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
+      - echo logging in to docker ..
+      - aws s3 cp s3://spineldockerprofile/docker.key docker.key
+      - docker login -u spinelconsult --password-stdin < docker.key
+      - rm docker.key
+      - echo docker login successful ..
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
