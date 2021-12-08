@@ -34,7 +34,7 @@ public class SupplierRoleController {
 
 
     @PostMapping("")
-    public ResponseEntity<Response> createPartnerRole(@Validated @RequestBody RoleDto request){
+    public ResponseEntity<Response> createSupplierRole(@Validated @RequestBody RoleDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         RoleResponseDto response = service.createSupplierRole(request);
@@ -48,7 +48,7 @@ public class SupplierRoleController {
 
 
     @GetMapping("/page")
-    public ResponseEntity<Response> getPartnerRole(@RequestParam(value = "name",required = false)String name,
+    public ResponseEntity<Response> getSupplierRole(@RequestParam(value = "name",required = false)String name,
                                                    @RequestParam(value = "isActive",required = false)Boolean isActive,
                                                    @RequestParam(value = "page") int page,
                                                    @RequestParam(value = "pageSize") int pageSize){
