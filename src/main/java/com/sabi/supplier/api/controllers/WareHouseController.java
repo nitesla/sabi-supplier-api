@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 
 @SuppressWarnings("All")
 @RestController
@@ -55,19 +54,17 @@ public class WareHouseController {
                                                   @RequestParam(value = "contactEmail", required = false) String contactEmail,
                                                   @RequestParam(value = "longitude", required = false) String longitude,
                                                   @RequestParam(value = "latitude", required = false) String latitude,
-                                                  @RequestParam(value = "warehouseUserId", required = false) Long warehouseUserId,
                                                   @RequestParam(value = "userId", required = false) Long userId,
                                                   @RequestParam(value = "lgaId", required = false) Long lgaId,
                                                   @RequestParam(value = "productCount", required = false) Long productCount,
                                                   @RequestParam(value = "name", required = false) String name,
-                                                  @RequestParam(value = "productCost", required = false) BigDecimal productCost,
                                                   @RequestParam(value = "isActive", required = false) Boolean isActive,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize) {
         return responseHelper
                 .buildResponse(wareHouseService.findWareHouses(productId, supplierId, stateId, address, contactPerson,
-                                contactPhone, contactEmail, longitude, latitude, warehouseUserId, userId, lgaId,
-                                productCount, name, productCost, isActive, PageRequest.of(page, pageSize)),
+                                contactPhone, contactEmail, longitude, latitude, userId, lgaId,
+                                productCount, name, isActive, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
