@@ -1,14 +1,13 @@
 package com.sabi.supplier.api.controllers;
 
-
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.supplier.service.services.CountryService;
-import com.sabi.suppliers.core.dto.request.CountryDto;
-import com.sabi.suppliers.core.dto.response.CountryResponseDto;
-import com.sabi.suppliers.core.models.Country;
+import com.sabi.supplier.service.services.ProductVariantService;
+import com.sabi.suppliers.core.dto.request.ProductVariantDto;
+import com.sabi.suppliers.core.dto.response.ProductVariantResponseDto;
+import com.sabi.suppliers.core.models.ProductVariant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,27 +19,21 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"country")
-public class CountryController {
+@RequestMapping(Constants.APP_CONTENT+"productvariant")
+public class ProductVariantController {
 
-    private final CountryService service;
+    private final ProductVariantService service;
 
-    public CountryController(CountryService service) {
+    public ProductVariantController(ProductVariantService service) {
         this.service = service;
     }
 
-
-    /** <summary>
-     * Country creation endpoint
-     * </summary>
-     * <remarks>this endpoint is responsible for creation of new country</remarks>
-     */
-
     @PostMapping("")
-    public ResponseEntity<Response> createCountry(@Validated @RequestBody CountryDto request){
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> createProduct(@Validated @RequestBody ProductVariantDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        CountryResponseDto response = service.createCountry(request);
+        ProductVariantResponseDto response = service.createProductVariant(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -48,19 +41,12 @@ public class CountryController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-
-
-    /** <summary>
-     * Country update endpoint
-     * </summary>
-     * <remarks>this endpoint is responsible for updating countries</remarks>
-     */
-
     @PutMapping("")
-    public ResponseEntity<Response> updateCountry(@Validated @RequestBody CountryDto request){
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> updateProduct(@Validated @RequestBody ProductVariantDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        CountryResponseDto response = service.updateCountry(request);
+        ProductVariantResponseDto response = service.updateProductVariant(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -68,18 +54,12 @@ public class CountryController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-
-
-    /** <summary>
-     * Get single record endpoint
-     * </summary>
-     * <remarks>this endpoint is responsible for getting a single record</remarks>
-     */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getCountry(@PathVariable Long id){
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> getProduct(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        CountryResponseDto response = service.findCountry(id);
+        ProductVariantResponseDto response = service.findProductVariantById(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -88,39 +68,29 @@ public class CountryController {
     }
 
 
-
-    /** <summary>
-     * Get all records endpoint
-     * </summary>
-     * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
-     */
     @GetMapping("")
-    public ResponseEntity<Response> getCountries(@RequestParam(value = "name",required = false)String name,
-                                              @RequestParam(value = "code",required = false)String code,
-                                              @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getProduct(@RequestParam(value = "name",required = false)String name,
+                                               @RequestParam(value = "productId",required = false)Long productId,
+                                               @RequestParam(value = "picture",required = false)String picture,
+                                               @RequestParam(value = "pieceaPerRow",required = false)Integer pieceaPerRow,
+                                               @RequestParam(value = "rowPerPack",required = false)Integer rowPerPack,
+                                               @RequestParam(value = "page") int page,
+                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Country> response = service.findAll(name,code, PageRequest.of(page, pageSize));
+        Page<ProductVariant> response = service.findAll(name,productId,picture,pieceaPerRow,rowPerPack, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
-
-
-    /** <summary>
-     * Enable disenable
-     * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
-     */
 
     @PutMapping("/enabledisenable")
     public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnableState(request);
+        service.enableDisEnable(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -129,16 +99,14 @@ public class CountryController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "name")String name,
-                                             @RequestParam(value = "code")String code){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Country> response = service.getAll(name,code);
+        List<ProductVariant> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
-
 }
