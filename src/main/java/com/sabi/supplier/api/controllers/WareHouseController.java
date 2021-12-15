@@ -75,7 +75,8 @@ public class WareHouseController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive") Boolean isActive) {
-        return responseHelper.buildResponse(wareHouseService.getAll(isActive), HttpStatus.OK, "Record fetched successfully !");
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive") Boolean isActive,
+                                           @RequestParam(value = "supplierId")Long supplierId) {
+        return responseHelper.buildResponse(wareHouseService.getAll(isActive,supplierId), HttpStatus.OK, "Record fetched successfully !");
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 
 
@@ -57,11 +58,13 @@ public class SupplyRequestController {
                                                       @RequestParam(value = "endTime", required = false) Date endTime,
                                                       @RequestParam(value = "referenceNo", required = false) String referenceNo,
                                                       @RequestParam(value = "status", required = false) String status,
+                                                      @RequestParam(value = "warehouseId", required = false) Long warehouseId,
+                                                      @RequestParam(value = "supplierId", required = false) Long supplierId,
                                                       @RequestParam(value = "page") int page,
-                                                      @RequestParam(value = "pageSize") int pageSize) {
+                                                      @RequestParam(value = "pageSize") int pageSize) throws ParseException {
         return responseHelper
-                .buildResponse(supplyRequestService.findSupplyRequests(productId, productName, askingQuantity,
-                                askingPrice, startTime, endTime, referenceNo, status, PageRequest.of(page, pageSize)),
+                .buildResponse(supplyRequestService.findAll(productId, productName, askingQuantity,
+                                askingPrice, startTime, endTime, referenceNo, status,warehouseId,supplierId, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
