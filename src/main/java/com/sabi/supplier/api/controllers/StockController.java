@@ -96,14 +96,14 @@ public class StockController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getShipment(@RequestParam(value = "supplyGoodId",required = false)Long supplyGoodId,
+    public ResponseEntity<Response> getShipment(@RequestParam(value = "wareHouseGoodId",required = false)Long wareHouseGoodId,
                                                 @RequestParam(value = "action",required = false)String action,
                                                 @RequestParam(value = "userId",required = false)Long userId,
                                                 @RequestParam(value = "page") int page,
                                                 @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Stock> response = service.findAll(supplyGoodId,action,userId, PageRequest.of(page, pageSize));
+        Page<Stock> response = service.findAll(wareHouseGoodId,action,userId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
