@@ -45,12 +45,18 @@ public class WareHouseUserController {
         return responseHelper.buildResponse(wareHouseService.findWareHouseUser(id), HttpStatus.OK, "Record fetched successfully !");
     }
 
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<Response> deleteWarehouseUserById(@PathVariable long id){
+        return responseHelper.buildResponse(wareHouseService.deleteWareHouseUser(id), HttpStatus.OK, "Record Deleted !");
+    }
+
     @GetMapping
     public ResponseEntity<Response> getWarehouseUsers(@RequestParam(value = "userId",required = false)Long userId,
-                                                 @RequestParam(value = "page") int page,
-                                                 @RequestParam(value = "pageSize") int pageSize){
+                                                      @RequestParam(value = "warehouseId",required = false)Long warehouseId,
+                                                      @RequestParam(value = "page") int page,
+                                                      @RequestParam(value = "pageSize") int pageSize){
         return responseHelper
-                .buildResponse(wareHouseService.findWareHouseUsers(userId, PageRequest.of(page, pageSize)),
+                .buildResponse(wareHouseService.findWareHouseUsers(userId, warehouseId, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
