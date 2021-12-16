@@ -9,8 +9,6 @@ import com.sabi.supplier.service.services.SupplierLocationService;
 import com.sabi.suppliers.core.dto.request.SupplierLocationRequestDto;
 import com.sabi.suppliers.core.dto.response.SupplierLocationResponseDto;
 import com.sabi.suppliers.core.models.SupplierLocation;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -91,25 +89,7 @@ public class SupplierLocationController {
 
 
 
-    /** <summary>
-     * Get all records endpoint
-     * </summary>
-     * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
-     */
-    @GetMapping("")
-    public ResponseEntity<Response> getSupplierLocations(@RequestParam(value = "supplierID",required = false)Long supplierID,
-                                                         @RequestParam(value = "stateID",required = false)Long stateID,
-                                                         @RequestParam(value = "page") int page,
-                                                         @RequestParam(value = "pageSize") int pageSize){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        Page<SupplierLocation> response = service.findAll(supplierID, stateID, PageRequest.of(page, pageSize));
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Record fetched successfully !");
-        resp.setData(response);
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
-    }
+
 
 
     /** <summary>

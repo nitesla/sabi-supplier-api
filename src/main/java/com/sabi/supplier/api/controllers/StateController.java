@@ -8,9 +8,9 @@ import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.StateService;
 import com.sabi.suppliers.core.dto.request.StateDto;
 import com.sabi.suppliers.core.dto.response.StateResponseDto;
+import com.sabi.suppliers.core.models.State;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import com.sabi.suppliers.core.models.State;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -99,7 +99,7 @@ public class StateController {
      * </summary>
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
-    @GetMapping("")
+    @GetMapping("/page")
     public ResponseEntity<Response> getStates(@RequestParam(value = "name",required = false)String name,
                                              @RequestParam(value = "page") int page,
                                              @RequestParam(value = "pageSize") int pageSize){
@@ -133,7 +133,19 @@ public class StateController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "countryId",required = false)Long countryId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<State> response = service.getAllByCountryId(countryId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/active/list")
+    public ResponseEntity<Response> getAllByActive(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
         List<State> response = service.getAll(isActive);
