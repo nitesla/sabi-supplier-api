@@ -35,7 +35,7 @@ public class SupplierGoodController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createSupplierLocation(@Validated @RequestBody SupplierGoodDto request){
+    public ResponseEntity<Response> createSupplierGoods(@Validated @RequestBody SupplierGoodDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         SupplierGoodResponseDto response = service.createSupplierGood(request);
@@ -55,7 +55,7 @@ public class SupplierGoodController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateSupplierLocation(@Validated @RequestBody  SupplierGoodDto request){
+    public ResponseEntity<Response> updateSupplierGoods(@Validated @RequestBody  SupplierGoodDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         SupplierGoodResponseDto response = service.updateSupplierGood(request);
@@ -74,7 +74,7 @@ public class SupplierGoodController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getSupplierLocation(@PathVariable Long id){
+    public ResponseEntity<Response> getSupplierGoods(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
         SupplierGoodResponseDto response = service.findSupplierGood(id);
@@ -93,7 +93,7 @@ public class SupplierGoodController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getSupplierLocations(@RequestParam(value = "supplierProductId",required = false)Long supplierProductId,
+    public ResponseEntity<Response> getSupplierGoods(@RequestParam(value = "supplierProductId",required = false)Long supplierProductId,
                                                          @RequestParam(value = "variantId",required = false)Long variantId,
 //                                                         @RequestParam(value = "price",required = false)double price,
                                                          @RequestParam(value = "page") int page,
@@ -128,10 +128,11 @@ public class SupplierGoodController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive,
+                                           @RequestParam(value = "supplierId",required = false)Long supplierId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<SupplierGood> response = service.getAll(isActive);
+        List<SupplierGood> response = service.getAll(isActive,supplierId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
