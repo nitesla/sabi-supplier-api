@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -36,7 +35,6 @@ public class ShipmentController {
      */
 
     @PostMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
     public ResponseEntity<Response> createShipment(@Validated @RequestBody ShipmentDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
@@ -47,6 +45,8 @@ public class ShipmentController {
         httpCode = HttpStatus.CREATED;
         return new ResponseEntity<>(resp, httpCode);
     }
+
+
 
 
 
