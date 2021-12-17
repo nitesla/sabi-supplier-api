@@ -93,14 +93,14 @@ public class SupplierGoodController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getSupplierGoods(@RequestParam(value = "supplierProductId",required = false)Long supplierProductId,
+    public ResponseEntity<Response> getSupplierGoods(@RequestParam(value = "supplierId",required = false)Long supplierId,
                                                          @RequestParam(value = "variantId",required = false)Long variantId,
 //                                                         @RequestParam(value = "price",required = false)double price,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<SupplierGood> response = service.findAll(supplierProductId, variantId, PageRequest.of(page, pageSize));
+        Page<SupplierGood> response = service.findAll(supplierId, variantId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -128,11 +128,10 @@ public class SupplierGoodController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive,
-                                           @RequestParam(value = "supplierId",required = false)Long supplierId){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<SupplierGood> response = service.getAll(isActive,supplierId);
+        List<SupplierGood> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

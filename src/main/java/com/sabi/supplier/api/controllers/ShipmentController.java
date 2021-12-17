@@ -6,9 +6,7 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.ShipmentService;
 import com.sabi.suppliers.core.dto.request.ShipmentDto;
-import com.sabi.suppliers.core.dto.request.ShipmentShipmentItemDto;
 import com.sabi.suppliers.core.dto.response.ShipmentResponseDto;
-import com.sabi.suppliers.core.dto.response.ShipmentShipmentResponseDto;
 import com.sabi.suppliers.core.models.Shipment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -49,17 +46,7 @@ public class ShipmentController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-    @PostMapping("shipmentitems")
-    public ResponseEntity<Response> createOrderOrderItems(@Validated @RequestBody ShipmentShipmentItemDto request){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        ShipmentShipmentResponseDto response = service.createShipmentItems(request);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Successful");
-        resp.setData(response);
-        httpCode = HttpStatus.CREATED;
-        return new ResponseEntity<>(resp, httpCode);
-    }
+
 
 
 
