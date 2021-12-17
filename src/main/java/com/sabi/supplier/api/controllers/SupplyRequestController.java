@@ -60,11 +60,12 @@ public class SupplyRequestController {
                                                       @RequestParam(value = "status", required = false) String status,
                                                       @RequestParam(value = "warehouseId", required = false) Long warehouseId,
                                                       @RequestParam(value = "supplierId", required = false) Long supplierId,
+                                                      @RequestParam(value = "unassigned", required = false) Boolean unassigned,
                                                       @RequestParam(value = "page") int page,
                                                       @RequestParam(value = "pageSize") int pageSize) throws ParseException {
         return responseHelper
                 .buildResponse(supplyRequestService.findAll(productId, productName, askingQuantity,
-                                askingPrice, startTime, endTime, referenceNo, status,warehouseId,supplierId, PageRequest.of(page, pageSize)),
+                                askingPrice, startTime, endTime, referenceNo, status,warehouseId,supplierId,unassigned, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 

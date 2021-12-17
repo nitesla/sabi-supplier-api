@@ -128,10 +128,11 @@ public class SupplierGoodController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive,
+                                           @RequestParam(value = "isActive")Long supplierId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<SupplierGood> response = service.getAll(isActive);
+        List<SupplierGood> response = service.getAll(isActive,supplierId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
