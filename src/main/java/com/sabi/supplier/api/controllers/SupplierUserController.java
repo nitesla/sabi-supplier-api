@@ -85,13 +85,14 @@ public class SupplierUserController {
                                                    @RequestParam(value = "email",required = false)String email,
                                                    @RequestParam(value = "username",required = false)String username,
                                                    @RequestParam(value = "roleId",required = false)Long roleId,
+                                                   @RequestParam(value = "isActive",required = false)Boolean isActive,
                                                    @RequestParam(value = "lastName",required = false)String lastName,
                                                    @RequestParam(value = "page") int page,
                                                    @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
 
-            Page<User> response = service.findByClientId(firstName, phone, email, username, roleId, lastName, PageRequest.of(page, pageSize));
+            Page<User> response = service.findByClientId(firstName, phone, email, username, roleId,isActive, lastName, PageRequest.of(page, pageSize));
             resp.setCode(CustomResponseCode.SUCCESS);
             resp.setDescription("Record fetched successfully !");
             resp.setData(response);
