@@ -92,7 +92,7 @@ public class SupplierUserController {
         HttpStatus httpCode ;
         Response resp = new Response();
 
-            Page<User> response = service.findByClientId(firstName, phone, email, username, roleId,isActive, lastName, PageRequest.of(page, pageSize));
+            Page<User> response = service.findByClientId(firstName, phone, email, username, roleId, lastName, PageRequest.of(page, pageSize));
             resp.setCode(CustomResponseCode.SUCCESS);
             resp.setDescription("Record fetched successfully !");
             resp.setData(response);
