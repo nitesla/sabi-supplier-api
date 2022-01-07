@@ -12,9 +12,11 @@ import com.sabi.framework.exceptions.UnauthorizedException;
 import com.sabi.framework.loggers.LoggerUtil;
 import com.sabi.framework.models.User;
 import com.sabi.framework.security.AuthenticationWithToken;
+import com.sabi.framework.service.AuditTrailService;
 import com.sabi.framework.service.ExternalTokenService;
 import com.sabi.framework.service.TokenService;
 import com.sabi.framework.service.UserService;
+import com.sabi.framework.utils.AuditTrailFlag;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.framework.utils.Utility;
@@ -53,16 +55,20 @@ public class AuthenticationController {
     @Autowired
     private ExternalTokenService externalTokenService;
 
+
+
     private final UserService userService;
     private final SupplierRepository supplierRepository;
     private final SupplierUserRepository supplierUserRepository;
+    private final AuditTrailService auditTrailService;
 
 
     public AuthenticationController(UserService userService,SupplierRepository supplierRepository,
-                                    SupplierUserRepository supplierUserRepository) {
+                                    SupplierUserRepository supplierUserRepository,AuditTrailService auditTrailService) {
         this.userService = userService;
         this.supplierRepository = supplierRepository;
         this.supplierUserRepository = supplierUserRepository;
+        this.auditTrailService = auditTrailService;
     }
 
     @PostMapping("/login")
@@ -97,6 +103,10 @@ public class AuthenticationController {
             } else {
                 //update login failed count and failed login date
                 loginStatus = "failed";
+                auditTrailService
+                        .logEvent(loginRequest.getUsername(), "Login by username :" + loginRequest.getUsername()
+                                        + " " + loginStatus,
+                                AuditTrailFlag.LOGIN, "Failed Login Request by :" + loginRequest.getUsername(),1, ipAddress);
                 userService.updateFailedLogin(user.getId());
                 throw new UnauthorizedException(CustomResponseCode.UNAUTHORIZED, "Invalid Login details.");
             }
@@ -124,9 +134,12 @@ public class AuthenticationController {
                 clientId = String.valueOf(supplier.getSupplierId());
             }
         }
-
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
                 accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory);
+
+        auditTrailService
+                .logEvent(loginRequest.getUsername(), "Login by username : " + loginRequest.getUsername(),
+                        AuditTrailFlag.LOGIN, "Successful Login Request by : " + loginRequest.getUsername() , 1, ipAddress);
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
