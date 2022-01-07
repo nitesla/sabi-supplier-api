@@ -95,7 +95,6 @@ public class SupplierGoodController {
     @GetMapping("")
     public ResponseEntity<Response> getSupplierGoods(@RequestParam(value = "supplierId",required = false)Long supplierId,
                                                          @RequestParam(value = "variantId",required = false)Long variantId,
-//                                                         @RequestParam(value = "price",required = false)double price,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
@@ -129,7 +128,7 @@ public class SupplierGoodController {
 
     @GetMapping("/list")
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive,
-                                           @RequestParam(value = "isActive")Long supplierId){
+                                           @RequestParam(value = "supplierId")Long supplierId){
         HttpStatus httpCode ;
         Response resp = new Response();
         List<SupplierGood> response = service.getAll(isActive,supplierId);
