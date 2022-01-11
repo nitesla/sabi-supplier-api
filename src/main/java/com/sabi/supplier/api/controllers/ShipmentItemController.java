@@ -7,6 +7,7 @@ import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.ShipmentItemService;
 import com.sabi.suppliers.core.dto.request.ShipmentDto;
 import com.sabi.suppliers.core.dto.request.ShipmentItemDto;
+import com.sabi.suppliers.core.dto.response.ShipmentItemInfoResponse;
 import com.sabi.suppliers.core.dto.response.ShipmentItemResponseDto;
 import com.sabi.suppliers.core.models.ShipmentItem;
 import org.springframework.data.domain.Page;
@@ -83,6 +84,19 @@ public class ShipmentItemController {
         HttpStatus httpCode ;
         Response resp = new Response();
         ShipmentItemResponseDto response = service.findShipmentItemById(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("supplierRequestId/{supplierRequestId}")
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> getShipmentItemBySupplierRequestId(@PathVariable Long supplierRequestId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        ShipmentItemInfoResponse response = service.findShipmentItemBySupplierRequestId(supplierRequestId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
