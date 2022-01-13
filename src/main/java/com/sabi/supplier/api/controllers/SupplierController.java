@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -45,10 +46,10 @@ public class SupplierController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<Response> supplierSignUp(@Validated @RequestBody SupplierSignUpRequestDto request){
+    public ResponseEntity<Response> supplierSignUp(@Validated @RequestBody SupplierSignUpRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        SupplierSignUpResponse response = service.supplierSignUp(request);
+        SupplierSignUpResponse response = service.supplierSignUp(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -88,10 +89,10 @@ public class SupplierController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateSupplier(@Validated @RequestBody  SupplierRequestDto request){
+    public ResponseEntity<Response> updateSupplier(@Validated @RequestBody  SupplierRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        SupplierResponseDto response = service.updateSupplier(request);
+        SupplierResponseDto response = service.updateSupplier(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -157,10 +158,10 @@ public class SupplierController {
      */
 
     @PutMapping("/enabledisable")
-    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto request){
+    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisable(request);
+        service.enableDisable(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;

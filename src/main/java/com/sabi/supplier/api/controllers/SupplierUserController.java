@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -38,10 +39,10 @@ public class SupplierUserController {
 
 
     @PostMapping("")
-    public ResponseEntity<Response> createSupplierUser(@Validated @RequestBody SupplierUserDto request){
+    public ResponseEntity<Response> createSupplierUser(@Validated @RequestBody SupplierUserDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        SupplierUserResponseDto response = service.createSupplierUser(request);
+        SupplierUserResponseDto response = service.createSupplierUser(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
