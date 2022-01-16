@@ -29,9 +29,9 @@ public class SupplierProductController {
     }
 
     /** <summary>
-     * Supplier Good creation endpoint
+     * Supplier Product creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new Supplier Location</remarks>
+     * <remarks>this endpoint is responsible for creation of new Supplier Product</remarks>
      */
 
     @PostMapping("")
@@ -49,9 +49,9 @@ public class SupplierProductController {
 
 
     /** <summary>
-     * Supplier Good update endpoint
+     * Supplier Product update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating Supplier Location</remarks>
+     * <remarks>this endpoint is responsible for updating Supplier Product</remarks>
      */
 
     @PutMapping("")
@@ -111,7 +111,7 @@ public class SupplierProductController {
     /** <summary>
      * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disabling a Supplier Location</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a Supplier Product</remarks>
      */
 
     @PutMapping("/enabledisable")
