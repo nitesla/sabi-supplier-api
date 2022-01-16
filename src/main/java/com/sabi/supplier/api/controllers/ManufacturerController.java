@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -36,10 +37,10 @@ public class ManufacturerController {
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createManufacturer(@Validated @RequestBody ManufacturerDto request){
+    public ResponseEntity<Response> createManufacturer(@Validated @RequestBody ManufacturerDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ManufacturerResponseDto response = service.createManufacturer(request);
+        ManufacturerResponseDto response = service.createManufacturer(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -57,10 +58,10 @@ public class ManufacturerController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateManufacturer(@Validated @RequestBody ManufacturerDto request){
+    public ResponseEntity<Response> updateManufacturer(@Validated @RequestBody ManufacturerDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ManufacturerResponseDto response = service.updateManufacturer(request);
+        ManufacturerResponseDto response = service.updateManufacturer(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
