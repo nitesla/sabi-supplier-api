@@ -8,7 +8,10 @@ import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.SupplierLocationService;
 import com.sabi.suppliers.core.dto.request.SupplierLocationRequestDto;
 import com.sabi.suppliers.core.dto.response.SupplierLocationResponseDto;
+import com.sabi.suppliers.core.models.SupplierGood;
 import com.sabi.suppliers.core.models.SupplierLocation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -88,7 +91,20 @@ public class SupplierLocationController {
     }
 
 
-
+    @GetMapping("")
+    public ResponseEntity<Response> getSupplierLocations(@RequestParam(value = "supplierId",required = false)Long supplierId,
+                                                     @RequestParam(value = "stateId",required = false)Long stateId,
+                                                     @RequestParam(value = "page") int page,
+                                                     @RequestParam(value = "pageSize") int pageSize){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        Page<SupplierLocation> response = service.findAll(supplierId, stateId, PageRequest.of(page, pageSize));
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
 
 
