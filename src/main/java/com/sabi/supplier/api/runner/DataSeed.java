@@ -322,6 +322,8 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
                 add(new LGA("Ushongo", 7l));
                 add(new LGA("Vandeikya", 7l));
 
+
+
                 add(new LGA("Agege", 25l));
                 add(new LGA("Ajeromi/Ifelodun", 25l));
                 add(new LGA("Alimosho", 25l));
