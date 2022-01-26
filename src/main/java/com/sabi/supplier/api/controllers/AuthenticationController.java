@@ -3,19 +3,13 @@ package com.sabi.supplier.api.controllers;
 
 import com.sabi.framework.dto.requestDto.GeneratePassword;
 import com.sabi.framework.dto.requestDto.LoginRequest;
-import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
-import com.sabi.framework.dto.responseDto.GeneratePasswordResponse;
-import com.sabi.framework.dto.responseDto.PartnersCategoryReturn;
-import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.dto.responseDto.*;
 import com.sabi.framework.exceptions.LockedException;
 import com.sabi.framework.exceptions.UnauthorizedException;
 import com.sabi.framework.loggers.LoggerUtil;
 import com.sabi.framework.models.User;
 import com.sabi.framework.security.AuthenticationWithToken;
-import com.sabi.framework.service.AuditTrailService;
-import com.sabi.framework.service.ExternalTokenService;
-import com.sabi.framework.service.TokenService;
-import com.sabi.framework.service.UserService;
+import com.sabi.framework.service.*;
 import com.sabi.framework.utils.AuditTrailFlag;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
@@ -61,14 +55,17 @@ public class AuthenticationController {
     private final SupplierRepository supplierRepository;
     private final SupplierUserRepository supplierUserRepository;
     private final AuditTrailService auditTrailService;
+    private final PermissionService permissionService;
 
 
     public AuthenticationController(UserService userService,SupplierRepository supplierRepository,
-                                    SupplierUserRepository supplierUserRepository,AuditTrailService auditTrailService) {
+                                    SupplierUserRepository supplierUserRepository,AuditTrailService auditTrailService,
+                                    PermissionService permissionService) {
         this.userService = userService;
         this.supplierRepository = supplierRepository;
         this.supplierUserRepository = supplierUserRepository;
         this.auditTrailService = auditTrailService;
+        this.permissionService = permissionService;
     }
 
     @PostMapping("/login")
@@ -128,14 +125,16 @@ public class AuthenticationController {
         String referralCode="";
         String isEmailVerified="";
         List<PartnersCategoryReturn> partnerCategory= null;
+        List<AccessListDto> permissionList= null;
         if (user.getUserCategory().equals(Constants.OTHER_USER)) {
             SupplierUser supplier = supplierUserRepository.findByUserId(user.getId());
             if(supplier !=null){
                 clientId = String.valueOf(supplier.getSupplierId());
             }
         }
+        permissionList = permissionService.getPermissionsByUserId(user.getId());
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory);
+                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory,permissionList);
 
         auditTrailService
                 .logEvent(loginRequest.getUsername(), "Login by username : " + loginRequest.getUsername(),
