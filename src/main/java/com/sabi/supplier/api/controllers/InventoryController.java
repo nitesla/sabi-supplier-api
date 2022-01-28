@@ -135,4 +135,16 @@ public class InventoryController {
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
+
+    @GetMapping("warehouseId/{warehouseId}")
+    public ResponseEntity<Response> getInventoryByWarehouseID(@RequestParam(value = "isActive")Long warehouseId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<Inventory> response = service.getInventoryiesByWarehouseId(warehouseId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 }
