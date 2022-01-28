@@ -1,9 +1,10 @@
 package com.sabi.supplier.api.controllers;
 
 
-import com.sabi.framework.dto.requestDto.GeneratePassword;
 import com.sabi.framework.dto.requestDto.LoginRequest;
-import com.sabi.framework.dto.responseDto.*;
+import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
+import com.sabi.framework.dto.responseDto.PartnersCategoryReturn;
+import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.exceptions.LockedException;
 import com.sabi.framework.exceptions.UnauthorizedException;
 import com.sabi.framework.loggers.LoggerUtil;
@@ -26,7 +27,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +56,7 @@ public class AuthenticationController {
     private final SupplierUserRepository supplierUserRepository;
     private final AuditTrailService auditTrailService;
     private final PermissionService permissionService;
+
 
 
     public AuthenticationController(UserService userService,SupplierRepository supplierRepository,
@@ -111,8 +112,8 @@ public class AuthenticationController {
             //NO NEED TO update login failed count and failed login date SINCE IT DOES NOT EXIST
             throw new UnauthorizedException(CustomResponseCode.UNAUTHORIZED, "Login details does not exist");
         }
-        //String accessList = roleService.getPermissionsByUserId(user.getId());
-        String accessList = "";
+        String accessList = permissionService.getPermissionsByUserId(user.getId());
+//        String accessList = "";
         AuthenticationWithToken authWithToken = new AuthenticationWithToken(user, null,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER,"+accessList));
         String newToken = "Bearer" +" "+this.tokenService.generateNewToken();
@@ -125,16 +126,15 @@ public class AuthenticationController {
         String referralCode="";
         String isEmailVerified="";
         List<PartnersCategoryReturn> partnerCategory= null;
-        List<AccessListDto> permissionList= null;
         if (user.getUserCategory().equals(Constants.OTHER_USER)) {
             SupplierUser supplier = supplierUserRepository.findByUserId(user.getId());
             if(supplier !=null){
                 clientId = String.valueOf(supplier.getSupplierId());
             }
         }
-        permissionList = permissionService.getPermissionsByUserId(user.getId());
+
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory,permissionList);
+                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory);
 
         auditTrailService
                 .logEvent(loginRequest.getUsername(), "Login by username : " + loginRequest.getUsername(),
@@ -169,17 +169,17 @@ public class AuthenticationController {
 
 
 
-    @PutMapping("/generatepassword")
-    public ResponseEntity<Response> generatePassword(@Validated @RequestBody GeneratePassword request){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        GeneratePasswordResponse response=userService.generatePassword(request);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Password generated successfully");
-        resp.setData(response);
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
-    }
+//    @PutMapping("/generatepassword")
+//    public ResponseEntity<Response> generatePassword(@Validated @RequestBody GeneratePassword request){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        GeneratePasswordResponse response=userService.generatePassword(request);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Password generated successfully");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
 
 
 }
