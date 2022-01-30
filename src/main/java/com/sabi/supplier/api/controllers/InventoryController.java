@@ -5,8 +5,12 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.InventoryService;
+import com.sabi.supplier.service.services.WareHouseService;
+import com.sabi.supplier.service.services.WareHouseUserService;
 import com.sabi.suppliers.core.dto.request.InventoryDto;
+import com.sabi.suppliers.core.dto.request.WareHouseRequest;
 import com.sabi.suppliers.core.dto.response.InventoryResponseDto;
+import com.sabi.suppliers.core.dto.response.WareHouseResponse;
 import com.sabi.suppliers.core.models.Inventory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +29,9 @@ public class InventoryController {
 
     @Autowired
     private InventoryService service;
+
+    @Autowired
+    private WareHouseService wareHouseService;
 
     /** <summary>
      * inventory creation endpoint
@@ -136,13 +143,37 @@ public class InventoryController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+//    @GetMapping("warehouseId/{warehouseId}")
+//    public ResponseEntity<Response> getInventoryByWarehouseID(PathVariable Long warehouseId){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        List<Inventory> response = service.getInventoryiesByWarehouseId(warehouseId);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Record fetched successfully !");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
+
     @GetMapping("warehouseId/{warehouseId}")
-    public ResponseEntity<Response> getInventoryByWarehouseID(@RequestParam(value = "isActive")Long warehouseId){
+    public ResponseEntity<Response> getInventoryByWarehouseID(@PathVariable Long warehouseId){
         HttpStatus httpCode ;
         Response resp = new Response();
         List<Inventory> response = service.getInventoryiesByWarehouseId(warehouseId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @PutMapping("warehouse")
+    public ResponseEntity<Response> updateInventoryWarehouse(@Validated @RequestBody WareHouseRequest request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        WareHouseResponse response = wareHouseService.updateWareHouse(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Update Successful");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
