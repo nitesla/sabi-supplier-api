@@ -2,6 +2,7 @@ package com.sabi.supplier.api.runner;
 
 
 
+import com.sabi.framework.service.ExternalTokenService;
 import com.sabi.supplier.service.services.ShipmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,9 +16,11 @@ import java.util.Date;
 public class CronJob {
 
     private ShipmentService shipmentService;
+    private ExternalTokenService externalTokenService;
 
-    public CronJob(ShipmentService shipmentService) {
+    public CronJob(ShipmentService shipmentService,ExternalTokenService externalTokenService) {
         this.shipmentService = shipmentService;
+        this.externalTokenService = externalTokenService;
 
     }
 
@@ -28,6 +31,12 @@ public class CronJob {
         shipmentService.shipmentTripRequests();
     }
 
+
+    @Scheduled(cron="${tokenGen}")
+    public void getNewToken() {
+        log.info("::::::::::::: Cron Job Started at :::::::::::: :   %s", new Date());
+        externalTokenService.externalTokenRequest();
+    }
 
 
 }
