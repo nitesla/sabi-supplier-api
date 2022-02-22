@@ -7,6 +7,7 @@ import com.sabi.framework.helpers.ResponseHelper;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.WareHouseService;
+import com.sabi.suppliers.core.dto.request.DefaultWarehouseRequest;
 import com.sabi.suppliers.core.dto.request.WareHouseRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,13 @@ public class WareHouseController {
         if (request.getId() == null || request.getId() < 0)
             throw new BadRequestException(CustomResponseCode.BAD_REQUEST, "Id Can not be empty");
         return responseHelper.buildResponse(wareHouseService.updateWareHouse(request), HttpStatus.OK, "Update Successful");
+    }
+
+    @PutMapping("isDefault")
+    public ResponseEntity<Response> warehouseIdDefault(@RequestBody @Valid DefaultWarehouseRequest request) {
+        if (request.getId() == null || request.getId() < 0)
+            throw new BadRequestException(CustomResponseCode.BAD_REQUEST, "Id Can not be empty");
+        return responseHelper.buildResponse(wareHouseService.setWareHouseAsDefault(request), HttpStatus.OK, "Update Successful");
     }
 
     @GetMapping("/{id}")
