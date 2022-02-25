@@ -6,8 +6,8 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.SupplierGoodService;
 import com.sabi.suppliers.core.dto.request.SupplierGoodDto;
-import com.sabi.suppliers.core.dto.response.SupplierGoodResponseDto;
 import com.sabi.suppliers.core.models.SupplierGood;
+import com.sabi.suppliers.core.models.response.SupplierGoodResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -95,11 +95,12 @@ public class SupplierGoodController {
     @GetMapping("")
     public ResponseEntity<Response> getSupplierGoods(@RequestParam(value = "supplierId",required = false)Long supplierId,
                                                          @RequestParam(value = "variantId",required = false)Long variantId,
+                                                     @RequestParam(value = "variantName",required = false)String variantName,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<SupplierGood> response = service.findAll(supplierId, variantId, PageRequest.of(page, pageSize));
+        Page<SupplierGood> response = service.findAll(supplierId, variantId,variantName, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
