@@ -5,7 +5,7 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.PartnerSignUpService;
-import com.sabi.suppliers.core.dto.response.ExternalDetailsResponse;
+import com.sabi.suppliers.core.models.response.ExternalDetailsResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
