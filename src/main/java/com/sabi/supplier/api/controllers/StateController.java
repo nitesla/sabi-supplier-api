@@ -8,7 +8,6 @@ import com.sabi.framework.globaladminintegration.response.ListResponse;
 import com.sabi.framework.globaladminintegration.response.PageResponse;
 import com.sabi.framework.globaladminintegration.response.SingleResponse;
 import com.sabi.framework.utils.Constants;
-import com.sabi.supplier.service.services.StateService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class StateController {
 
 
-    private final StateService service;
+
     private final GlobalService globalService;
 
-    public StateController(StateService service,GlobalService globalService) {
-        this.service = service;
+    public StateController(GlobalService globalService) {
         this.globalService = globalService;
     }
 
@@ -168,18 +166,7 @@ public class StateController {
         PageResponse response= globalService.getStatePagination(request);
         return response;
     }
-    /** <summary>
-     * Get all records endpoint
-     * </summary>
-     * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
 
-
-
-    /** <summary>
-     * Enable disenable
-     * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
-     */
 
 
 

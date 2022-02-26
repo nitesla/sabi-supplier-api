@@ -8,7 +8,6 @@ import com.sabi.framework.globaladminintegration.response.ListResponse;
 import com.sabi.framework.globaladminintegration.response.PageResponse;
 import com.sabi.framework.globaladminintegration.response.SingleResponse;
 import com.sabi.framework.utils.Constants;
-import com.sabi.supplier.service.services.CountryService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(Constants.APP_CONTENT+"country")
 public class CountryController {
 
-    private final CountryService service;
     private final GlobalService globalService;
 
-    public CountryController(CountryService service,GlobalService globalService) {
-        this.service = service;
+    public CountryController(GlobalService globalService) {
         this.globalService = globalService;
     }
 
