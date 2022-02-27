@@ -40,6 +40,19 @@ public class WareHouseGoodController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @PostMapping("goodslist")
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> createWareHouseGood(@Validated @RequestBody List<WareHouseGoodDto> request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<WareHouseGoodResponseDto> response = wareHouseGoodService.createWarehouses(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
 
     /** <summary>
@@ -92,11 +105,12 @@ public class WareHouseGoodController {
     public ResponseEntity<Response> getWarehouseGood(@RequestParam(value = "warehouseId",required = false)Long warehouseId,
                                                 @RequestParam(value = "supplierGoodId",required = false)Long supplierGoodId,
                                                       @RequestParam(value = "supplierId",required = false)Long supplierId,
+                                                     @RequestParam(value = "productId",required = false)Long productId,
                                                 @RequestParam(value = "page") int page,
                                                 @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<WareHouseGood> response = wareHouseGoodService.findAll(warehouseId,supplierGoodId,supplierId, PageRequest.of(page, pageSize));
+        Page<WareHouseGood> response = wareHouseGoodService.findAll(warehouseId,supplierGoodId,supplierId,productId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
