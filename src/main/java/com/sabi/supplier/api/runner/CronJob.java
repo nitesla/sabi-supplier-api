@@ -33,7 +33,7 @@ public class CronJob {
 
 
     @Scheduled(cron="${cronExpression}")
-    @SchedulerLock(name = "ShipmentTripRequests", lockAtMostFor = "50s", lockAtLeastFor = "30s")
+    @SchedulerLock(name = "ShipmentTripRequests", lockAtMostFor = "50s", lockAtLeastFor = "40s")
     public void ShipmentTripRequests() {
         log.info("move trip request Scheduler called", new Date());
         shipmentService.shipmentTripRequests();
@@ -41,7 +41,7 @@ public class CronJob {
 
 
     @Scheduled(cron="${tokenGen}")
-    @SchedulerLock(name = "getNewToken", lockAtMostFor = "50s", lockAtLeastFor = "30s")
+    @SchedulerLock(name = "getNewToken", lockAtMostFor = "40s", lockAtLeastFor = "30s")
     public void getNewToken() {
         log.info("::::::::::::: Cron Job Started at :::::::::::: :   %s", new Date());
         externalTokenService.externalTokenRequest();
@@ -49,7 +49,7 @@ public class CronJob {
 
 
     @Scheduled(cron = "${globalAdminToken}")
-    @SchedulerLock(name = "globalToken", lockAtMostFor = "50s", lockAtLeastFor = "30s")
+    @SchedulerLock(name = "globalToken", lockAtMostFor = "30s", lockAtLeastFor = "20s")
     public void globalToken() {
         log.info("::::::::::::: global token Cron Job Started at :::::::::::: :   %s", new Date());
         accessTokenService.globalTokenRequest();
