@@ -74,6 +74,18 @@ public class WareHouseGoodController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @PutMapping("goodslist")
+    public ResponseEntity<Response> updateWareHouseGoods(@Validated @RequestBody List<WareHouseGoodDto> request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<WareHouseGoodResponseDto> response = wareHouseGoodService.updateWarehouseGoods(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Update Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
 
     /** <summary>
