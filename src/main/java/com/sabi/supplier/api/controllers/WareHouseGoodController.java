@@ -118,11 +118,12 @@ public class WareHouseGoodController {
                                                 @RequestParam(value = "supplierGoodId",required = false)Long supplierGoodId,
                                                       @RequestParam(value = "supplierId",required = false)Long supplierId,
                                                      @RequestParam(value = "productId",required = false)Long productId,
+                                                     @RequestParam(value = "variantName",required = false)String variantName,
                                                 @RequestParam(value = "page") int page,
                                                 @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<WareHouseGood> response = wareHouseGoodService.findAll(warehouseId,supplierGoodId,supplierId,productId, PageRequest.of(page, pageSize));
+        Page<WareHouseGood> response = wareHouseGoodService.findAll(warehouseId,supplierGoodId,supplierId,productId,variantName, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
