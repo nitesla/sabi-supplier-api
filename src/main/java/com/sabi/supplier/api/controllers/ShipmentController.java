@@ -159,4 +159,16 @@ public class ShipmentController {
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
+
+    @GetMapping("/list/supplierId")
+    public ResponseEntity<Response> getAllShipment(@RequestParam(value = "supplierId")Long supplierId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<Shipment> response = service.getAllShipment(supplierId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 }
