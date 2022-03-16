@@ -12,11 +12,13 @@ import com.sabi.suppliers.core.models.response.ShipmentResponseDto;
 import com.sabi.suppliers.core.models.response.ShipmentShipmentResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -165,6 +167,20 @@ public class ShipmentController {
         HttpStatus httpCode ;
         Response resp = new Response();
         List<Shipment> response = service.getAllShipment(supplierId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/list/supplierId/data")
+    public ResponseEntity<Response> getAllShipmentData(@RequestParam(value = "supplierId")Long supplierId,
+                                                       @RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                                       @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<Shipment> response = service.getAllShipmentData(supplierId,startDate,endDate);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
