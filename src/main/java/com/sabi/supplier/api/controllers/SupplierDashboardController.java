@@ -27,12 +27,15 @@ public class SupplierDashboardController {
     @Autowired
    private SupplierDashboardService dashboardService;
 
-    @PostMapping("summary/{supplierId}")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createDashboardInfo(@PathVariable Long supplierId){
+    @PostMapping("summary")
+//    public ResponseEntity<Response> createDashboardInfo(@PathVariable Long supplierId){
+    public ResponseEntity<Response> createDashboardInfo(@RequestParam(value = "supplierId") Long supplierId,
+                                                        @RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                                        @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
+    ){
         HttpStatus httpCode ;
         Response resp = new Response();
-        SupplierDashbaordResponseDto response = dashboardService.createDashboardInfo(supplierId);
+        SupplierDashbaordResponseDto response = dashboardService.createDashboardInfo(supplierId,startDate,endDate);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -41,7 +44,6 @@ public class SupplierDashboardController {
     }
 
     @PostMapping("summary/product")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
     public ResponseEntity<Response> getTopProduct(@RequestParam(value = "supplierId") Long supplierId,
                                                   @RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                                   @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
@@ -71,7 +73,6 @@ public class SupplierDashboardController {
 //    }
 
     @GetMapping("summary/warehouseDate")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
     public ResponseEntity<Response> getWarehouseDate(@RequestParam(value = "productId") Long productId,
                                                      @RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                                      @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate

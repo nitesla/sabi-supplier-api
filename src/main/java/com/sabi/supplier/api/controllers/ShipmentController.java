@@ -171,4 +171,18 @@ public class ShipmentController {
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
+
+//    @GetMapping("/list/supplierId/data")
+//    public ResponseEntity<Response> getAllShipmentData(@RequestParam(value = "supplierId")Long supplierId,
+//                                                       @RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+//                                                       @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        List<Shipment> response = service.getAllShipmentData(supplierId,startDate,endDate);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Record fetched successfully !");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
 }
