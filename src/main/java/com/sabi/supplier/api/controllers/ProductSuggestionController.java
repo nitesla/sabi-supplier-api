@@ -5,9 +5,14 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.ProductService;
+import com.sabi.supplier.service.services.ProductSuggestionService;
 import com.sabi.suppliers.core.dto.request.ProductDto;
+import com.sabi.suppliers.core.dto.request.ProductSuggestionRequestDto;
 import com.sabi.suppliers.core.models.Product;
+import com.sabi.suppliers.core.models.ProductSuggestion;
 import com.sabi.suppliers.core.models.response.ProductResponseDto;
+import com.sabi.suppliers.core.models.response.ProductSuggestionResponseDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,30 +22,26 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"product")
-public class ProductController {
+@RequestMapping(Constants.APP_CONTENT+"productSuggestion")
+public class ProductSuggestionController {
 
-    private final ProductService service;
-
-    public ProductController(ProductService service) {
-        this.service = service;
-    }
+    @Autowired
+    private ProductSuggestionService service;
 
 
     /** <summary>
-     * Product creation endpoint
+     * Product suggestion suggestion creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new product</remarks>
+     * <remarks>this endpoint is responsible for creation of new Product suggestion</remarks>
      */
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createProduct(@Validated @RequestBody ProductDto request){
+    public ResponseEntity<Response> createProductSuggestion(@Validated @RequestBody ProductSuggestionRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ProductResponseDto response = service.createProduct(request);
+        ProductSuggestionResponseDto response = service.createProductSuggestion(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -51,17 +52,17 @@ public class ProductController {
 
 
     /** <summary>
-     * product update endpoint
+     * Product suggestion update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating product</remarks>
+     * <remarks>this endpoint is responsible for updating Product suggestion</remarks>
      */
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateProduct(@Validated @RequestBody ProductDto request){
+    public ResponseEntity<Response> updateProductSuggestion(@Validated @RequestBody ProductSuggestionRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ProductResponseDto response = service.updateProduct(request);
+        ProductSuggestionResponseDto response = service.updateProductSuggestion(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -78,10 +79,10 @@ public class ProductController {
      */
     @GetMapping("/{id}")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getProduct(@PathVariable Long id){
+    public ResponseEntity<Response> getProductSuggestionById(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ProductResponseDto response = service.findProduct(id);
+        ProductSuggestionResponseDto response = service.findProductSuggestion(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -97,12 +98,14 @@ public class ProductController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getProduct(@RequestParam(value = "name",required = false)String name,
-                                              @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getProductSuggestions(@RequestParam(value = "name",required = false)String name,
+                                               @RequestParam(value = "manufacturer",required = false)String manufacturer,
+                                               @RequestParam(value = "status",required = false)String status,
+                                               @RequestParam(value = "page") int page,
+                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Product> response = service.findAllProduct(name, PageRequest.of(page, pageSize));
+        Page<ProductSuggestion> response = service.findAllProductSuggestions(name,manufacturer,status, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -114,7 +117,7 @@ public class ProductController {
     /** <summary>
      * Enable disenable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a product</remarks>
+     * <remarks>this endpoint is responsible for enabling and disenabling a Product suggestion</remarks>
      */
 
     @PutMapping("/enabledisenable")
@@ -124,19 +127,6 @@ public class ProductController {
         service.enableDisEnableState(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
-    }
-
-
-    @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        List<Product> response = service.getAll(isActive);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Record fetched successfully !");
-        resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
