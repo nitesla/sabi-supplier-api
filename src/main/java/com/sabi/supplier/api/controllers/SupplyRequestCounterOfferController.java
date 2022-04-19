@@ -2,12 +2,14 @@ package com.sabi.supplier.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.helpers.ResponseHelper;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.supplier.service.services.ProductService;
-import com.sabi.suppliers.core.dto.request.ProductDto;
-import com.sabi.suppliers.core.models.Product;
-import com.sabi.suppliers.core.models.response.ProductResponseDto;
+import com.sabi.supplier.service.services.SupplyRequestCounterOfferService;
+import com.sabi.suppliers.core.dto.request.SupplyRequestCounterOfferRequestDto;
+import com.sabi.suppliers.core.models.SupplyRequestCounterOffer;
+import com.sabi.suppliers.core.models.response.SupplyRequestCounterOfferResponseDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -15,32 +17,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-@SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"product")
-public class ProductController {
+@RequestMapping(Constants.APP_CONTENT + "supplyrequestCounterOffer")
+public class SupplyRequestCounterOfferController {
 
-    private final ProductService service;
+    @Autowired
+    private SupplyRequestCounterOfferService service;
+    private final ResponseHelper responseHelper;
 
-    public ProductController(ProductService service) {
+    public SupplyRequestCounterOfferController(SupplyRequestCounterOfferService service, ResponseHelper responseHelper) {
         this.service = service;
+        this.responseHelper = responseHelper;
     }
 
-
-    /** <summary>
-     * Product creation endpoint
-     * </summary>
-     * <remarks>this endpoint is responsible for creation of new product</remarks>
-     */
-
     @PostMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createProduct(@Validated @RequestBody ProductDto request){
+    public ResponseEntity<Response> createSupplierRequestCounterOffer(@Validated @RequestBody SupplyRequestCounterOfferRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ProductResponseDto response = service.createProduct(request);
+        SupplyRequestCounterOfferResponseDto response = service.createSupplyRequestCounterOffer(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -51,17 +48,16 @@ public class ProductController {
 
 
     /** <summary>
-     * product update endpoint
+     * Supply Request Counter Offer update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating product</remarks>
+     * <remarks>this endpoint is responsible for updating Supply Request Counter Offer</remarks>
      */
 
     @PutMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateProduct(@Validated @RequestBody ProductDto request){
+    public ResponseEntity<Response> updateSupplierRequestCounterOffer(@Validated @RequestBody  SupplyRequestCounterOfferRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ProductResponseDto response = service.updateProduct(request);
+        SupplyRequestCounterOfferResponseDto response = service.updateSupplyRequestCounterOffer(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -77,11 +73,10 @@ public class ProductController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getProduct(@PathVariable Long id){
+    public ResponseEntity<Response> getSupplierRequestCounterOffer(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ProductResponseDto response = service.findProduct(id);
+        SupplyRequestCounterOfferResponseDto response = service.findSupplyRequestCounterOfferById(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -97,12 +92,15 @@ public class ProductController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getProduct(@RequestParam(value = "name",required = false)String name,
-                                              @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getSupplierRequestCounterOffers(@RequestParam(value = "price",required = false) BigDecimal price,
+                                                          @RequestParam(value = "supplierRequestId",required = false)Long supplierRequestId,
+                                                          @RequestParam(value = "quantity",required = false)Integer quantity,
+                                                          @RequestParam(value = "userId",required = false)Long userId,
+                                                          @RequestParam(value = "page") int page,
+                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Product> response = service.findAllProduct(name, PageRequest.of(page, pageSize));
+        Page<SupplyRequestCounterOffer> response = service.findAllSupplyRequestCounterOffer(price, supplierRequestId, quantity,userId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -112,16 +110,16 @@ public class ProductController {
 
 
     /** <summary>
-     * Enable disenable
+     * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a product</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a Supplier Request Counter Offer</remarks>
      */
 
-    @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    @PutMapping("/enabledisable")
+    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnableState(request);
+        service.enableDisEnable(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -133,7 +131,7 @@ public class ProductController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Product> response = service.getAll(isActive);
+        List<SupplyRequestCounterOffer> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
