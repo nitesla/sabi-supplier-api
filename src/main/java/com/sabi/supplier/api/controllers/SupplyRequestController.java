@@ -82,14 +82,14 @@ public class SupplyRequestController {
         return responseHelper.buildResponse(supplyRequestService.getAll(isActive), HttpStatus.OK, "Record fetched successfully !");
     }
 
-    @GetMapping("/timeList")
-    public void getAllSupplyRequest() {
-       supplyRequestService.pushToIncomingRequest();
-    }
+//    @GetMapping("/timeList")
+//    public void getAllSupplyRequest() {
+//       supplyRequestService.pushToIncomingRequest();
+//    }
 
-    @GetMapping("/timeListCheck")
-    public ResponseEntity<Response> getAllSupplyRequests(@RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-                                                         @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
-        return responseHelper.buildResponse(supplyRequestService.timeCheck(startDate,endDate), HttpStatus.OK, "Record fetched successfully !");
-    }
+//    @GetMapping("/timeListCheck")
+//    public ResponseEntity<Response> getAllSupplyRequests(@RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+//                                                         @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+//        return responseHelper.buildResponse(supplyRequestService.timeCheck(startDate,endDate), HttpStatus.OK, "Record fetched successfully !");
+//    }
 }
