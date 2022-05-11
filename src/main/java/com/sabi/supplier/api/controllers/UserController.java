@@ -191,16 +191,16 @@ public class UserController {
     }
 
 
-    @PutMapping("/changepin")
-    public ResponseEntity<Response> transactionPin(@Validated @RequestBody ChangeTransactionPin request){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        service.setPin(request);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Successful");
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
-    }
+//    @PutMapping("/changepin")
+//    public ResponseEntity<Response> transactionPin(@Validated @RequestBody ChangeTransactionPin request){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        service.setPin(request);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Successful");
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
 
 
 
