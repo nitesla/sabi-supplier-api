@@ -88,8 +88,7 @@ public class SupplyRequestController {
 //    }
 
 //    @GetMapping("/timeListCheck")
-//    public ResponseEntity<Response> getAllSupplyRequests(@RequestParam(value = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-//                                                         @RequestParam(value = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
-//        return responseHelper.buildResponse(supplyRequestService.timeCheck(startDate,endDate), HttpStatus.OK, "Record fetched successfully !");
+//    public ResponseEntity<Response> getAllSupplyRequests(@RequestParam(value = "startDate") String startDate) {
+//        return responseHelper.buildResponse(supplyRequestService.timeCheck(), HttpStatus.OK, "Record fetched successfully !");
 //    }
 }
