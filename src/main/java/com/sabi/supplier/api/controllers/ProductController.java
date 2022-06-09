@@ -98,11 +98,12 @@ public class ProductController {
      */
     @GetMapping("")
     public ResponseEntity<Response> getProduct(@RequestParam(value = "name",required = false)String name,
+                                               @RequestParam(value = "productCategoryId",required = false)Long productCategoryId,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Product> response = service.findAllProduct(name, PageRequest.of(page, pageSize));
+        Page<Product> response = service.findAllProduct(name,productCategoryId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
