@@ -103,6 +103,19 @@ public class ShipmentController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @GetMapping("/masterShipment/{id}")
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> getMasterShipment(@PathVariable Long id){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        ShipmentShipmentResponseDto response = service.findMasterShipment(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
 
     /** <summary>
