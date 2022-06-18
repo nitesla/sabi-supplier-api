@@ -5,11 +5,10 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.ShipmentItemService;
-import com.sabi.suppliers.core.dto.request.ShipmentDto;
 import com.sabi.suppliers.core.dto.request.ShipmentItemDto;
+import com.sabi.suppliers.core.dto.response.ShipmentItemInfoResponse;
+import com.sabi.suppliers.core.dto.response.ShipmentItemResponseDto;
 import com.sabi.suppliers.core.models.ShipmentItem;
-import com.sabi.suppliers.core.models.response.ShipmentItemInfoResponse;
-import com.sabi.suppliers.core.models.response.ShipmentItemResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @SuppressWarnings("All")

@@ -5,7 +5,8 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.supplier.service.services.PartnerSignUpService;
-import com.sabi.suppliers.core.models.response.ExternalDetailsResponse;
+import com.sabi.suppliers.core.dto.response.ExternalDetailsResponse;
+import com.sabi.suppliers.core.dto.response.PartnerUserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,19 @@ public class PartnerDetailsController {
         HttpStatus httpCode ;
         Response resp = new Response();
         ExternalDetailsResponse response = service.partnerDetails();
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
+    @GetMapping("/partneremail")
+    public ResponseEntity<Response> getLogisticsUser(String email){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        PartnerUserResponse response = service.getLogisticsUser(email);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
