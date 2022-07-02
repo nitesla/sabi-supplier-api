@@ -142,6 +142,30 @@ public class ShipmentController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+//    /** <summary>
+//     * Get all master shipment records endpoint
+//     * </summary>
+//     * <remarks>this endpoint is responsible for getting all master shipment records and its searchable</remarks>
+//     */
+//    @GetMapping("/masterShipment")
+//    public ResponseEntity<Response> getAllMasterShipment(@RequestParam(value = "warehouseId",required = false)Long warehouseId,
+//                                                @RequestParam(value = "logisticPartnerId",required = false)Long logisticPartnerId,
+//                                                @RequestParam(value = "logisticsPartnerName",required = false)String logisticsPartnerName,
+//                                                @RequestParam(value = "phoneNumber",required = false)String phoneNumber,
+//                                                @RequestParam(value = "vehicle",required = false)String vehicle,
+//                                                @RequestParam(value = "status",required = false)String status,
+//                                                @RequestParam(value = "page") int page,
+//                                                @RequestParam(value = "pageSize") int pageSize){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        Page<ShipmentShipmentResponseDto> response = service.findAllMasterShipment(warehouseId,logisticPartnerId,logisticsPartnerName,phoneNumber,vehicle,status, PageRequest.of(page, pageSize));
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Record fetched successfully !");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
+
 
     /** <summary>
      * Enable disenable
