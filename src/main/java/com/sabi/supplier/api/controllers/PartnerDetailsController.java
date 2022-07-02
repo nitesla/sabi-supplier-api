@@ -40,6 +40,21 @@ public class PartnerDetailsController {
     }
 
 
+
+
+    @GetMapping("/admin")
+    public ResponseEntity<Response> getPartnerDetailsByAdmin(Long supplierId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        ExternalDetailsResponse response = service.partnerDetailsByAdmin(supplierId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
     @GetMapping("/partneremail")
     public ResponseEntity<Response> getLogisticsUser(String email){
         HttpStatus httpCode ;
